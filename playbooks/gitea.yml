@@ -89,8 +89,4 @@
       _gitea_register_email_confirm: "{{ gitea_register_email_confirm | default(false) | bool }}"
       _gitea_enable_notify_mail: "{{ gitea_enable_notify_mail | default(false) | bool }}"
 
-      _default_gitea_env_vars:
-        - name: TZ
-          value: "America/New_York"
-
-      _gitea_env_vars: {{ gitea_env_vars | default(_default_gitea_env_vars) }}
+      _gitea_env_vars: "{{ gitea_env_vars | default([]) }}"
