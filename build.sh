@@ -1,8 +1,9 @@
 #!/bin/bash
 # This shell script builds a new container image for the Gitea Operator
-VERSION=1.2.9
+VERSION=1.3.1
 QUAY_ID=gpte-devops-automation
 QUAY_USER=gpte-devops-automation+giteaoperatorbuild
+CONTAINER_BUILT="false"
 
 #echo "Logging in as ${QUAY_USER}. Please provide password when prompted."
 #podman login -u ${QUAY_USER} quay.io
@@ -13,10 +14,10 @@ QUAY_USER=gpte-devops-automation+giteaoperatorbuild
 #fi
 
 # Build Operator Container Image
-make docker-build IMG=quay.io/$QUAY_ID/gitea-operator:v${VERSION}
+make podman-build IMG=quay.io/$QUAY_ID/gitea-operator:v${VERSION}
 
 # Push Operator Image to Registry
-make docker-push IMG=quay.io/$QUAY_ID/gitea-operator:v${VERSION}
+make podman-push IMG=quay.io/$QUAY_ID/gitea-operator:v${VERSION}
 
 # Make Operator Bundle
 make bundle CHANNELS=stable DEFAULT_CHANNEL=stable VERSION=${VERSION} IMG=quay.io/$QUAY_ID/gitea-operator:v${VERSION}
