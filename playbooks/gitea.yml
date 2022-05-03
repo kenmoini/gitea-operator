@@ -11,7 +11,7 @@
 # - ansible_operator_meta.name (from the name of the CR)
 
 - hosts: localhost
-  gather_facts: no
+  gather_facts: false
   tasks:
   - name: Set up PostgreSQL
     when: postgresql_setup | default(true) | bool
