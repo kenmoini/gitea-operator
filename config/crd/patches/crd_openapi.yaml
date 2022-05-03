@@ -248,3 +248,16 @@ spec:
               giteaEnableNotifyMail:
                 description: 'Send e-mail notifications to users for various tasks in Gitea. Requires the mailer to be configured correctly. Default: false'
                 type: boolean
+
+              giteaEnvVars:
+                description: 'Environment variables to be set in the Gitea container. Default: [{"name": "TZ", "value": "America/New_York"}]'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      description: 'Name of the environment variable to set on the Gitea container.'
+                      type: string
+                    value:
+                      description: 'Value of the environment variable to set on the Gitea container.'
+                      type: string

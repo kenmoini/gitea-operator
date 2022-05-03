@@ -236,6 +236,26 @@ spec:
   giteaVolumeSize: 10Gi
 ----
 
+=== Set Gitea Environmental Variables, like an Outbound Proxy
+
+You may need to set environmental variables on the Gitea container, eg setting the traditional lower-case environmental variables to use an outbound proxy.
+
+[source,yaml]
+----
+apiVersion: gpte.opentlc.com/v1
+kind: Gitea
+metadata:
+  name: gitea-with-env-vars
+spec:
+  giteaEnvVars:
+    - name: "http_proxy"
+      value: "http://192.168.51.1:3128/"
+    - name: "https_proxy"
+      value: "http://192.168.51.1:3128/"
+    - name: "no_proxy"
+      value: ".cluster.local,.svc,10.128.0.0/14,127.0.0.1,172.30.0.0/16,192.168.51.0/24,api-int.core-ocp.lab.kemo.network,api.core-ocp.lab.kemo.network,localhost,.apps.core-ocp.lab.kemo.network"
+----
+
 == API Reference:
 
 Below is a list and description of all possible parameters that can be set for the `Gitea` custom resource.
@@ -410,7 +430,6 @@ giteaRepositoriesList:
       private:
         description: 'Create private repository in Gitea.'
         type: boolean
-
 giteaHttpPort:
   description: 'Port for Gitea to listen on. Default: 3000'
   type: integer
@@ -467,4 +486,18 @@ giteaRegisterEmailConfirm:
 giteaEnableNotifyMail:
   description: 'Send e-mail notifications to users for various tasks in Gitea. Requires the mailer to be configured correctly. Default: false'
   type: boolean
+
+giteaEnvVars:
+  description: 'Environment variables to be passed to the Gitea container.
+    Default: [{"name": "TZ", "value": "America/New_York"}]'
+  type: array
+  items:
+    properties:
+      name:
+        description: Name of the environment variable.
+        type: string
+      value:
+        description: Value of the environment variable.
+        type: string
+    type: object
 ----

@@ -91,3 +91,7 @@ _gitea_user_name: ""
 
 # Actual Gitea user password
 _gitea_actual_user_password: ""
+
+_gitea_env_vars:
+  - name: TZ
+    value: "America/New_York"
