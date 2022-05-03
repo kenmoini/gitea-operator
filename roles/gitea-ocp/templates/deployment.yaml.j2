@@ -55,13 +55,13 @@ spec:
           mountPath: /gitea-repositories
         - name: gitea-config
           mountPath: /home/gitea/conf
-        {{- if _gitea_env_vars | length > 0 }}
+{% if _gitea_env_vars | length > 0 %}
         env:
-        {{- range $index, $env := _gitea_env_vars }}
-        - name: {{ $env.name }}
-          value: "{{ $env.value }}"
-        {{- end }}
-        {{- end }}
+{% for env in _gitea_env_vars %}
+        - name: "{{ env.name }}"
+          value: "{{ env.value }}"
+{% endfor %}
+{% endif %}
       volumes:
       - name: gitea-repositories
         persistentVolumeClaim:
