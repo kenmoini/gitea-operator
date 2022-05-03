@@ -2,7 +2,7 @@
 # This shell script builds a new container image for the Gitea Operator
 VERSION=1.3.1
 QUAY_ID=gpte-devops-automation
-QUAY_USER=gpte-devops-automation+giteaoperatorbuild
+#QUAY_USER=gpte-devops-automation+giteaoperatorbuild
 CONTAINER_BUILT="false"
 
 #echo "Logging in as ${QUAY_USER}. Please provide password when prompted."
