@@ -9,7 +9,7 @@ metadata:
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions: {}
-  description: Gitea Operator - provided by Red Hat GPTE, see https://github.com/redhat-gpte-devopsautomation/gitea-operator
+  description: Gitea Operator - provided by Ken Moini, see https://github.com/kenmoini/gitea-operator
     for documentation.
   displayName: Gitea Operator
   icon:
@@ -39,6 +39,6 @@ spec:
     name: Wolfgang Kulhanek
   maturity: alpha
   provider:
-    name: Red Hat GPTE
+    name: Ken Moini
     url: www.redhat.com/partners
   version: 0.0.0
