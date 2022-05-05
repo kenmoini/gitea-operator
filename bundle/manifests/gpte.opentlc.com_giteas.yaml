@@ -96,6 +96,20 @@ spec:
                   in Gitea. Requires the mailer to be configured correctly. Default:
                   false'
                 type: boolean
+              giteaEnvVars:
+                description: 'Environment variables to be set in the Gitea container.  Default: []'
+                items:
+                  properties:
+                    name:
+                      description: Name of the environment variable to set on the
+                        Gitea container.
+                      type: string
+                    value:
+                      description: Value of the environment variable to set on the
+                        Gitea container.
+                      type: string
+                  type: object
+                type: array
               giteaGenerateUserFormat:
                 description: 'Format for user names to be created. This will be taken
                   literally if only one user is to be created (e.g. lab-user). If
@@ -240,19 +254,6 @@ spec:
                   claim. Default is empty - which will create a PVC using the currently
                   available default storage class on the cluster.
                 type: string
-              giteaEnvVars:
-                description: 'Environment variables to be passed to the Gitea container.
-                  Default: [{"name": "TZ", "value": "America/New_York"}]'
-                items:
-                  properties:
-                    name:
-                      description: Name of the environment variable.
-                      type: string
-                    value:
-                      description: Value of the environment variable.
-                      type: string
-                  type: object
-                type: array
               postgresqlCpuLimit:
                 anyOf:
                 - type: integer

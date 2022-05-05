@@ -38,7 +38,9 @@ BUNDLE_IMG ?= $(IMAGE_TAG_BASE)-bundle:v$(VERSION)
 # Image URL to use all building/pushing image targets
 IMG ?= controller:latest
 
-all: docker-build
+TAG ?= $(IMAGE_TAG_BASE):latest
+
+all: podman-build
 
 ##@ General
 
@@ -63,6 +65,9 @@ run: ansible-operator ## Run against the configured Kubernetes cluster in ~/.kub
 
 podman-build: ## Build podman image with the manager.
 	podman build -t ${IMG} .
+
+podman-tag: ## Tag an Image with another tag
+	podman tag ${IMG} ${TAG}
 
 podman-push: ## Push podman image with the manager.
 	podman push ${IMG}
@@ -130,7 +135,7 @@ bundle-build: ## Build the bundle image.
 
 .PHONY: bundle-push
 bundle-push: ## Push the bundle image.
-	$(MAKE) docker-push IMG=$(BUNDLE_IMG)
+	$(MAKE) podman-push IMG=$(BUNDLE_IMG)
 
 .PHONY: opm
 OPM = ./bin/opm
@@ -165,9 +170,9 @@ endif
 # https://github.com/operator-framework/community-operators/blob/7f1438c/docs/packaging-operator.md#updating-your-existing-operator
 .PHONY: catalog-build
 catalog-build: opm ## Build a catalog image.
-	$(OPM) index add --container-tool docker --mode semver --tag $(CATALOG_IMG) --bundles $(BUNDLE_IMGS) $(FROM_INDEX_OPT)
+	$(OPM) index add --container-tool podman --mode semver --tag $(CATALOG_IMG) --bundles $(BUNDLE_IMGS) $(FROM_INDEX_OPT)
 
 # Push the catalog image.
 .PHONY: catalog-push
 catalog-push: ## Push a catalog image.
-	$(MAKE) docker-push IMG=$(CATALOG_IMG)
+	$(MAKE) podman-push IMG=$(CATALOG_IMG)

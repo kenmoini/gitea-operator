@@ -8,7 +8,7 @@ This repository holds the source code for the Red Hat GPTE Gitea Operator. It ca
 +
 [source,sh]
 ----
-oc apply -f https://raw.githubusercontent.com/redhat-gpte-devopsautomation/gitea-operator/master/catalog_source.yaml
+oc apply -f https://raw.githubusercontent.com/kenmoini/gitea-operator/master/catalog_source.yaml
 ----
 
 . Log into your Cluster's Web Console using an account with `cluster-admin` privileges.
@@ -488,8 +488,7 @@ giteaEnableNotifyMail:
   type: boolean
 
 giteaEnvVars:
-  description: 'Environment variables to be passed to the Gitea container.
-    Default: [{"name": "TZ", "value": "America/New_York"}]'
+  description: 'Environment variables to be passed to the Gitea container.  Default: []'
   type: array
   items:
     properties:

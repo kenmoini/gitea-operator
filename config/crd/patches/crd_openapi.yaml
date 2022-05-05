@@ -250,7 +250,7 @@ spec:
                 type: boolean
 
               giteaEnvVars:
-                description: 'Environment variables to be set in the Gitea container. Default: [{"name": "TZ", "value": "America/New_York"}]'
+                description: 'Environment variables to be set in the Gitea container. Default: []'
                 type: array
                 items:
                   type: object
