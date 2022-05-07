@@ -35,8 +35,8 @@ spec:
   - name: Gitea Operator
     url: https://gitea-operator.domain
   maintainers:
-  - email: wkulhane@redhat.com
-    name: Wolfgang Kulhanek
+  - email: kemo@redhat.com
+    name: Ken Moini
   maturity: alpha
   provider:
     name: Ken Moini

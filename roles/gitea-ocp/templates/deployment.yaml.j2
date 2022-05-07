@@ -55,6 +55,15 @@ spec:
           mountPath: /gitea-repositories
         - name: gitea-config
           mountPath: /home/gitea/conf
+{% if _gitea_extra_volumes | length > 0 %}
+{% for vol in _gitea_extra_volumes %}
+        - name: "{{ vol.name }}"
+          mountPath: "{{ vol.mountPath }}"
+{% if vol.readOnly is defined %}
+          readOnly: {{ vol.readOnly }}
+{% endif %}
+{% endfor %}
+{% endif %}
 {% if _gitea_env_vars | length > 0 %}
         env:
 {% for env in _gitea_env_vars %}
@@ -72,3 +81,20 @@ spec:
           items:
             - key: app.ini
               path: app.ini
+{% if _gitea_extra_volumes | length > 0 %}
+{% for vol in _gitea_extra_volumes %}
+      - name: "{{ vol.name }}"
+        {{ vol.type }}:
+          {{ 'secretName' if vol.type == 'secret' else 'name' }}: "{{ vol.targetName }}"
+{% if vol.mountItems | length > 0 %}
+          items:
+{% for mount in vol.mountItems %}
+          - key: "{{ mount.key }}"
+            path: "{{ mount.path }}"
+{% endfor %}
+{% endif %}
+{% if vol.defaultMode is defined %}
+          defaultMode: {{ vol.defaultMode }}
+{% endif %}
+{% endfor %}
+{% endif %}

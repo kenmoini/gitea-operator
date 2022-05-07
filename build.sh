@@ -1,8 +1,11 @@
 #!/bin/bash
 # This shell script builds a new container image for the Gitea Operator
-VERSION=1.3.2
-QUAY_ID=kenmoini
+
+#VERSION=1.3.3
+#QUAY_ID=kenmoini
 #QUAY_USER=gpte-devops-automation+giteaoperatorbuild
+
+source set_env.sh
 
 #echo "Logging in as ${QUAY_USER}. Please provide password when prompted."
 #podman login -u ${QUAY_USER} quay.io

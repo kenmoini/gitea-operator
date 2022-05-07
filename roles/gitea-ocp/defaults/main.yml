@@ -93,3 +93,5 @@ _gitea_user_name: ""
 _gitea_actual_user_password: ""
 
 _gitea_env_vars: []
+
+_gitea_extra_volumes: []

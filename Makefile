@@ -63,6 +63,15 @@ help: ## Display this help.
 run: ansible-operator ## Run against the configured Kubernetes cluster in ~/.kube/config
 	$(ANSIBLE_OPERATOR) run
 
+docker-build: ## Build docker image with the manager.
+	docker build -t ${IMG} .
+
+docker-tag: ## Tag an Image with another tag
+	docker tag ${IMG} ${TAG}
+
+docker-push: ## Push docker image with the manager.
+	docker push ${IMG}
+
 podman-build: ## Build podman image with the manager.
 	podman build -t ${IMG} .
 
