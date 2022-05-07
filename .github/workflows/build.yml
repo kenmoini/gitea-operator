@@ -58,6 +58,7 @@ jobs:
     name: Build Operator Bundle
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    needs: build-operator
     steps:
 
     - name: Check out code
@@ -110,6 +111,7 @@ jobs:
     name: Build Operator Catalog
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    needs: [build-operator, build-operator-bundle]
     steps:
 
     - name: Check out code
