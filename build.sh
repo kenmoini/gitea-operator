@@ -17,6 +17,11 @@ source set_env.sh
 
 export PATH="$(pwd)/bin:$PATH"
 
+make opm
+make kustomize
+make operator-sdk
+make ansible-operator
+
 # Build Operator Container Image
 make podman-build IMG=quay.io/$QUAY_ID/gitea-operator:v${VERSION}
 

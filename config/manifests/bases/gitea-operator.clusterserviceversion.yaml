@@ -9,8 +9,7 @@ metadata:
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions: {}
-  description: Gitea Operator - provided by Ken Moini, see https://github.com/kenmoini/gitea-operator
-    for documentation.
+  description: Gitea Operator - provided by Ken Moini, see https://github.com/kenmoini/gitea-operator for documentation.
   displayName: Gitea Operator
   icon:
   - base64data: ""
