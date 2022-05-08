@@ -1,8 +1,8 @@
 name: Build Container & Deploy to Quay
 on:
   push:
-    #branches:
-    #  - main
+    branches:
+      - main
     tags:
       - v*
 jobs:

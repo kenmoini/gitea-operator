@@ -4,9 +4,13 @@ export PATH="$(pwd)/bin:$PATH"
 
 source set_env.sh
 
+mkdir bin
+
 make opm
 make kustomize
 make ansible-operator
+
+ls bin
 
 make bundle CHANNELS=stable DEFAULT_CHANNEL=stable VERSION=${VERSION} IMG=quay.io/$QUAY_ID/gitea-operator:v${VERSION}
 
