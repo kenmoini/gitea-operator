@@ -9,7 +9,7 @@ export ARCH=$(uname -m | sed 's/x86_64/amd64/')
 
 mkdir bin
 
-curl -sSLo - https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v3.5.4/kustomize_v3.5.4_$(OS)_$(ARCH).tar.gz | tar xzf - -C bin/
+curl -sSLo - https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v3.5.4/kustomize_v3.5.4_${OS}_${ARCH}.tar.gz | tar xzf - -C bin/
 make opm
 make ansible-operator
 
