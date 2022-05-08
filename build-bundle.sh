@@ -14,6 +14,8 @@ make opm
 make ansible-operator
 make operator-sdk
 
+which docker
+
 ls bin
 
 make bundle CHANNELS=stable DEFAULT_CHANNEL=stable VERSION=${VERSION} IMG=quay.io/$QUAY_ID/gitea-operator:v${VERSION}

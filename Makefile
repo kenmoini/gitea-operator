@@ -147,29 +147,6 @@ OPERATOR_SDK = $(shell which operator-sdk)
 endif
 endif
 
-.PHONY: bundle
-bundle: kustomize ## Generate bundle manifests and metadata, then validate generated files.
-	operator-sdk generate kustomize manifests -q
-	cd config/manager && $(KUSTOMIZE) edit set image controller=$(IMG)
-	$(KUSTOMIZE) build config/manifests | operator-sdk generate bundle -q --overwrite --version $(VERSION) $(BUNDLE_METADATA_OPTS)
-	operator-sdk bundle validate ./bundle
-
-
-.PHONY: bundle-local
-bundle-local: kustomize ## Generate bundle manifests and metadata, then validate generated files.
-	./bin/operator-sdk generate kustomize manifests -q
-	cd config/manager && ../../bin/kustomize edit set image controller=$(IMG)
-	../../bin/kustomize build config/manifests | ../../bin/operator-sdk generate bundle -q --overwrite --version $(VERSION) $(BUNDLE_METADATA_OPTS)
-	../../bin/operator-sdk bundle validate ./bundle
-
-.PHONY: bundle-build
-bundle-build: ## Build the bundle image.
-	podman build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
-
-.PHONY: bundle-push
-bundle-push: ## Push the bundle image.
-	$(MAKE) podman-push IMG=$(BUNDLE_IMG)
-
 .PHONY: opm
 OPM = ./bin/opm
 opm: ## Download opm locally if necessary.
@@ -185,6 +162,21 @@ else
 OPM = $(shell which opm)
 endif
 endif
+
+.PHONY: bundle
+bundle: kustomize ## Generate bundle manifests and metadata, then validate generated files.
+	operator-sdk generate kustomize manifests -q
+	cd config/manager && $(KUSTOMIZE) edit set image controller=$(IMG)
+	$(KUSTOMIZE) build config/manifests | operator-sdk generate bundle -q --overwrite --version $(VERSION) $(BUNDLE_METADATA_OPTS)
+	operator-sdk bundle validate ./bundle
+
+.PHONY: bundle-build
+bundle-build: ## Build the bundle image.
+	podman build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
+
+.PHONY: bundle-push
+bundle-push: ## Push the bundle image.
+	$(MAKE) podman-push IMG=$(BUNDLE_IMG)
 
 # A comma-separated list of bundle images (e.g. make catalog-build BUNDLE_IMGS=example.com/operator-bundle:v0.1.0,example.com/operator-bundle:v0.2.0).
 # These images MUST exist in a registry and be pull-able.
