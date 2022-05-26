@@ -10,6 +10,7 @@
 make opm
 make kustomize
 make ansible-operator
+make operator-sdk
 ```
 
 ## Modify build.sh
