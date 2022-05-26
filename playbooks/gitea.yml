@@ -90,5 +90,3 @@
       _gitea_enable_notify_mail: "{{ gitea_enable_notify_mail | default(false) | bool }}"
 
       _gitea_env_vars: "{{ gitea_env_vars | default([]) }}"
-
-      _gitea_extra_volumes: "{{ gitea_extra_volumes | default([]) }}"

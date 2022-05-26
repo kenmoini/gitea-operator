@@ -1,5 +1,54 @@
 ---
 # tasks file for Gitea
+
+# ===============================================================================================
+# Add the custom Root CAs
+# ===============================================================================================
+
+- name: Check to see if the cluster-wide certificates are set
+  kubernetes.core.k8s_info:
+    api_version: config.openshift.io/v1
+    kind: Proxy
+    name: cluster
+  register: r_cluster_proxy_config
+
+- name: Set the name of the cluster root CA bundle
+  when: (r_cluster_proxy_config.resources[0].spec.trustedCA.name is defined) and (r_cluster_proxy_config.resources[0].spec.trustedCA.name != '')
+  set_fact:
+    cluster_root_ca: cluster-root-ca-bundle
+
+- name: Set the fact for httpProxy
+  when: (r_cluster_proxy_config.resources[0].spec.httpProxy is defined) and (r_cluster_proxy_config.resources[0].spec.httpProxy != '')
+  set_fact:
+    http_proxy: "{{ r_cluster_proxy_config.resources[0].spec.httpProxy }}"
+
+- name: Set the fact for httpsProxy
+  when: (r_cluster_proxy_config.resources[0].spec.httpsProxy is defined) and (r_cluster_proxy_config.resources[0].spec.httpsProxy != '')
+  set_fact:
+    https_proxy: "{{ r_cluster_proxy_config.resources[0].spec.httpsProxy }}"
+
+- name: Set the fact for noProxy
+  when: (r_cluster_proxy_config.resources[0].spec.noProxy is defined) and (r_cluster_proxy_config.resources[0].spec.noProxy != '')
+  set_fact:
+    no_proxy: "{{ r_cluster_proxy_config.resources[0].spec.noProxy }}"
+
+- name: Set the needed empty ConfigMap for the cluster-wide certificates to {{ _gitea_state }}
+  when: (r_cluster_proxy_config.resources[0].spec.trustedCA.name is defined) and (r_cluster_proxy_config.resources[0].spec.trustedCA.name != '')
+  kubernetes.core.k8s:
+    state: "{{ _gitea_state }}"
+    api_version: v1
+    kind: ConfigMap
+    namespace: "{{ _gitea_namespace }}"
+    merge_type:
+    - strategic-merge
+    - merge
+    definition:
+      metadata:
+        name: "{{ cluster_root_ca }}"
+        labels:
+          config.openshift.io/inject-trusted-cabundle: 'true'
+      data: {}
+
 - name: Set OpenShift Objects for Gitea to {{ _gitea_state }}
   kubernetes.core.k8s:
     state: "{{ _gitea_state }}"
